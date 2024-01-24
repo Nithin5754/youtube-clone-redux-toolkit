@@ -1,13 +1,17 @@
-import {Header,Body  } from "./components/index";
+import {Header,Body, MainContainer,WatchPage  } from "./components/index";
+import {Routes,Route } from "react-router-dom";
+
 
 function App() {
-
-
   return (
     <>
-
-    <Header/>
-    <Body/>
+        <Routes>
+             <Route path="/" element={<Body/>}>
+               <Route index element={<MainContainer/>}/>
+               <Route path="watch" element={<WatchPage/>}/>   
+      
+             </Route>
+        </Routes>
     </>
   )
 }

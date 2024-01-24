@@ -1,17 +1,23 @@
 import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 
 
-import {SideBar,MainContainer  } from "./index";
+import {SideBar,Header } from "./index";
+
 
 const Body = () => {
 
   const data=useSelector((store)=>store.navigation.hamburger)
   return (
-    <div className="flex">
+ <>
+   <Header/>
+    <div className="flex ">
+
      {data&& <SideBar/>}
-    <MainContainer/>
-    
+   
+     <Outlet/>
     </div>
+ </>
   )
 }
 export default Body
