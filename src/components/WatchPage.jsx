@@ -7,7 +7,7 @@ import { Comment } from "./index";
 
 
 const WatchPage = () => {
-  // const data=useSelector((store)=>store.navigation.hamburger)
+
   const dispatch=useDispatch()
   let [searchParams] = useSearchParams();
   const dataId=searchParams.get('v')

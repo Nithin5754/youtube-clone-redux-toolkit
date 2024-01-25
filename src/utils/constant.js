@@ -9,6 +9,10 @@ export const YOUTUBE_COMMENT=` https://www.googleapis.com/youtube/v3/commentThre
 
 
 
+export const YOUTUBE_API_SEARCH=`https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=`
+
+
+
 
 
 

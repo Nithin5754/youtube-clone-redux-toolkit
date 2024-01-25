@@ -13,6 +13,7 @@ const Comment = ({VIDEO_ID}) => {
      const data=await response.json()
      console.log(data.items);
      setComment(data.items)
+     console.log(data.items);
 
     //  .snippet.topLevelComment.snippet.textOriginal
   }
@@ -26,10 +27,10 @@ useEffect(()=>{
     <div className="max-w-xl mx-auto">
     {
       isComment.map((item) => {
-        const { authorDisplayName, authorProfileImageUrl, textOriginal, publishedAt } = item.snippet.topLevelComment.snippet;
+        const { authorDisplayName, authorProfileImageUrl, textOriginal, publishedAt,id } = item.snippet.topLevelComment.snippet;
   
         return (
-          <div className="flex items-start space-x-4 p-4 border-b border-gray-200">
+          <div key={id} className="flex items-start space-x-4 p-4 border-b border-gray-200">
             <img className="w-10 h-10 rounded-full" src={authorProfileImageUrl} alt={authorDisplayName} />
             <div className="flex flex-col">
               <span className="font-semibold">{authorDisplayName}</span>
