@@ -10,10 +10,14 @@ let [isVideo,setVideo]=useState([])
  
 
 const fetchData=async()=>{
+ try {
   const response=await fetch(YOUTUBE_API)
   let data=await response.json()
   setVideo(data.items)
   console.log(data.items);
+ } catch (error) {
+  console.log(error,"YOUTUBE_API");
+ }
 }
 
 useEffect(()=>{
@@ -24,7 +28,7 @@ useEffect(()=>{
   return (
 <div className="flex flex-wrap gap-5 m-auto">
     {
-      isVideo.map((video,index) => {
+      isVideo.map((video  ) => {
         return (
           
           <Link key={video.id} to={`/watch?v=${video.id}`}>

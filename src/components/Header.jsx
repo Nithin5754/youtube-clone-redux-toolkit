@@ -3,22 +3,37 @@ import {FaHamburger ,FaYoutube,FaUserCircle ,FaSearch } from "react-icons/fa";
 import { toggleHamburger } from "../utils/navigationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { YOUTUBE_API_SEARCH } from "../utils/constant";
+import { YOUTUBE_API_SEARCH,YOUTUBE_SEARCH_URL,YOUTUBE_API_KEY} from "../utils/constant";
 import { addCachedResult } from "../utils/searchSlice";
+import { addSearchList } from "../utils/searchListSlice";
+import { Link } from "react-router-dom";
+
+
+
+
+// const YOUTUBE_SEARCH_URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=${encodeURIComponent(SEARCH_TERM)}&key=${YOUTUBE_API_KEY}`;
+
 
 const Header = () => {
   const [searchQuery,setSearchQuery]=useState('')
   const [searchSuggestion,setSearchSuggestion]=useState([])
+
+
+  //getting the search items from youtube search api list
+  // const [isSearchList,setSearchList]=useState([])
+
  const [SuggestionShow,setSuggestionShow]=useState(false)
   const dispatch=useDispatch()
   const searchCache=useSelector((store)=>store.search)
 
 useEffect(()=>{
 const timer=setTimeout(() => {
+
   if(searchCache[searchQuery]){
-    setSuggestionShow(searchCache[searchQuery])
+ 
+    setSearchSuggestion(searchCache[searchQuery])
   }else{
-    console.log(searchQuery);
+
     searchQueryHandle() 
 
   }
@@ -27,17 +42,41 @@ const timer=setTimeout(() => {
 return ()=>clearTimeout(timer)
 
 },[searchQuery])
+
+
+const handleSubmit=()=>{
+  getSearchList()
+}
+
+
+
+const getSearchList=async()=>{
+ try {
+  const response=await fetch(YOUTUBE_SEARCH_URL+encodeURIComponent(searchQuery)+"&key="+YOUTUBE_API_KEY);
+  const data=await response.json();
+  // console.log(data?.items?.[0]?.snippet,"hey one word");
+  console.log(data);
+dispatch(addSearchList(data?.items))
+ } catch (error) {
+  console.log(error,"searclist list items");
+ }
+}
+
+
 const searchQueryHandle=async ()=>{
   const response=await fetch(YOUTUBE_API_SEARCH+searchQuery)
   const data=await response.json()
-  console.log(data[1]);
+
+  setSearchSuggestion(data[1])
   dispatch(addCachedResult(
     {
       [searchQuery]:data[1]
     }
   ))
-  setSearchSuggestion(data[1])
+
 }
+
+
 
   return (
     <div className="grid grid-flow-col h-14 shadow-xl">
@@ -54,7 +93,13 @@ const searchQueryHandle=async ()=>{
        onFocus={()=>setSuggestionShow(true)}
        onBlur={()=>setSuggestionShow(false)}
        />
-       <p className="bg-gray-400 text-white  hover:bg-blue-600 p-2 text-lg rounded-r-full"><FaSearch/></p>
+       <p  className="bg-gray-400 text-white  hover:bg-blue-600 p-2 text-lg rounded-r-full">
+        <Link to={'/itemList'}>
+        <button onClick={handleSubmit} >
+       <FaSearch/>
+        </button>
+        </Link>
+        </p>
      </div>
    {
     SuggestionShow&&searchSuggestion.length>0&&(
@@ -63,15 +108,10 @@ const searchQueryHandle=async ()=>{
   {
  searchSuggestion.map((suggestion)=>{
    return(
-     <li className="flex gap-2 hover:bg-gray-100 p-2"><span className="text-sm"><FaSearch/></span>{suggestion}</li>
+     <li key={suggestion} className="flex gap-2 hover:bg-gray-100 p-2"><span className="text-sm"><FaSearch/></span>{suggestion}</li>
    )
    })
   }
-
-   
-    
-     
-
       </ul>
     </div>
     )

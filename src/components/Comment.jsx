@@ -26,11 +26,11 @@ useEffect(()=>{
   return (
     <div className="max-w-xl mx-auto">
     {
-      isComment.map((item) => {
+      isComment.map((item,index) => {
         const { authorDisplayName, authorProfileImageUrl, textOriginal, publishedAt,id } = item.snippet.topLevelComment.snippet;
   
         return (
-          <div key={id} className="flex items-start space-x-4 p-4 border-b border-gray-200">
+          <div key={index} className="flex items-start space-x-4 p-4 border-b border-gray-200">
             <img className="w-10 h-10 rounded-full" src={authorProfileImageUrl} alt={authorDisplayName} />
             <div className="flex flex-col">
               <span className="font-semibold">{authorDisplayName}</span>
