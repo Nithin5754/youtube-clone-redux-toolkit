@@ -12,4 +12,6 @@ import SearchList from "./SearchList";
 import LiveChat from "./LiveChat";
 import ChatMessage from "./ChatMessage";
 
-export {ChatMessage,LiveChat,SearchList,Comment,Header,Body,SideBar,MainContainer,ButtonList,VideoContainer,Button,VideoCards,WatchPage}
+import Sample from "./Sample";
+
+export {Sample,ChatMessage,LiveChat,SearchList,Comment,Header,Body,SideBar,MainContainer,ButtonList,VideoContainer,Button,VideoCards,WatchPage}

@@ -1,4 +1,4 @@
-import {Header,Body, MainContainer,WatchPage  } from "./components/index";
+import {Header,Body, MainContainer,WatchPage,Sample} from "./components/index";
 import {Routes,Route } from "react-router-dom";
 import { SearchList } from "./components/index";
 
@@ -11,6 +11,7 @@ function App() {
                <Route index element={<MainContainer/>}/>
                <Route path="watch" element={<WatchPage/>}/>   
                <Route path="itemList" element={<SearchList/>}/>
+               <Route path="sample" element={<Sample/>}/>
       
              </Route>
         </Routes>
